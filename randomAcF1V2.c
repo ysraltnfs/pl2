@@ -11,7 +11,7 @@ struct student{
 typedef struct student ogrenci;
 
 
-void dosyaOlustur(char *fnp){
+void temizle(char *fnp){
 
 
     printf("%s isimli dosyanin icerigi silinecektir. devam etmek istiyor musunuz(E/H) : ", fnp);
@@ -267,7 +267,7 @@ int main(){
         printf("islem seciniz: ");
         scanf("%d", &secim2);
         printf("\n");
-        if(secim2 == 1) dosyaOlustur(fnp);
+        if(secim2 == 1) temizle(fnp);
         else if(secim2 == 2) kayitEkle(fnp);
         else if(secim2 == 3) kayitSil(fnp);
         else if(secim2 == 4) ara(fnp);
