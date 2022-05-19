@@ -14,7 +14,7 @@ typedef struct student ogrenci;
 void dosyaOlustur(char *fnp){
 
 
-    printf("%s isimli bir dosya olusturulacak. ayni adli bir dosya varsa icerigi silinecektir. devam etmek istiyor musunuz(E/H) : ", fnp);
+    printf("%s isimli dosyanin icerigi silinecektir. devam etmek istiyor musunuz(E/H) : ", fnp);
     char secim;
     secim = getchar();
     secim = getchar();
@@ -27,16 +27,16 @@ void dosyaOlustur(char *fnp){
         //scanf("%s", fn);
         printf("\n");
         p1 = fopen(fnp,"w");
-        if(p1 == NULL) printf("Hata!\nDosya olusturulamadi\n");
+        if(p1 == NULL) printf("Hata!\nDosya icerigi temizlenemedi\n");
         else{
             for(i=1; i<=100; i++){
                 fwrite(&bos, sizeof(ogrenci), 1, p1);    
             }
             fclose(p1);
-            printf("Dosya olusturuldu\n\n");
+            printf("Dosya icerigi temizlendi\n\n");
         }
     }
-    else printf("\ndosya olusturma iptal edildi\n");
+    else printf("\ntemizleme islemi iptal edildi\n");
     
 }
 
@@ -130,7 +130,9 @@ void ara(char *fnp){
     fseek(p3, (oNO-1)*sizeof(ogrenci),SEEK_SET);
     fread(&oBilgi, sizeof(ogrenci), 1, p3);
     if(oBilgi.numara == oNO && oNO != 0){
-        printf("%.0lf %s %s %s\n", oBilgi.numara, oBilgi.isim, oBilgi.soyisim, oBilgi.bolum);
+        printf("%-6s %-18s %-18s %-18s\n","no", "isim", "soyisim", "bolum");
+        printf("------------------------------------------------------------------\n");
+        printf("%-6.0lf %-18s %-18s %-18s\n", oBilgi.numara, oBilgi.isim, oBilgi.soyisim, oBilgi.bolum);
     }
     else printf("kayit bulunamadi\n");
     printf("\n");
@@ -146,12 +148,12 @@ void listele(char *fnp){
     //printf("\n");
     p3 = fopen(fnp,"r");
     ogrenci oBilgi = {0, "", "", ""};
-    printf("%-6s %-14s %-14s %-14s\n","no", "isim", "soyisim", "bolum");
-    printf("------------------------------------------------------------------\n");
+    printf("%-6s %-18s %-18s %-18s\n","no", "isim", "soyisim", "bolum");
+    printf("-------------------------------------------------------------------------\n");
     while(!feof(p3)){
         fread(&oBilgi, sizeof(ogrenci), 1, p3);
         if(oBilgi.numara!=0){
-            printf("%-6.0lf %-14s %-14s %-14s\n", oBilgi.numara, oBilgi.isim, oBilgi.soyisim, oBilgi.bolum);
+            printf("%-6.0lf %-18s %-18s %-18s\n", oBilgi.numara, oBilgi.isim, oBilgi.soyisim, oBilgi.bolum);
         }
     }
     printf("\n");
@@ -236,7 +238,15 @@ int main(){
 
         FILE *p1;
         p1 = fopen(nfn, "r");
-        if(p1 == NULL) printf("\nHata!\ndosya bulunamadi\n");
+        if(p1 == NULL){ 
+            printf("\nHata! dosya bulunamadi\nlutfen menuden 6. islemi (isleme baska bir dosya ile devam et) seciniz\n\nmenuye gecis yapmak icin enter tusuna basin... ");
+            getchar();
+            getchar();
+            printf("\n");
+
+        }
+
+
         else{
             strcpy(fnp, nfn);
             printf("Dosyaya erisildi\n");
@@ -250,7 +260,7 @@ int main(){
         
 
 
-    printf("\n1. dosya olusturma\n2. kayit ekleme\n3. kayit silme\n4. kayit arama\n5. kayitli ogrencileri listele\n6. isleme baska bir dosya ile devam et\n7. cikis\n\n");
+    printf("\n1. dosya icerigini sil\n2. kayit ekleme\n3. kayit silme\n4. kayit arama\n5. kayitli ogrencileri listele\n6. isleme baska bir dosya ile devam et\n7. cikis\n\n");
     int secim2;
     while(secim2 != 7){
         printf("dosya adi: %s\n", fn);
